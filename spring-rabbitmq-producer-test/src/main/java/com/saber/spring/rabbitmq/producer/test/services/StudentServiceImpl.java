@@ -1,8 +1,8 @@
 package com.saber.spring.rabbitmq.producer.test.services;
 
+import com.saber.entities.StudentDto;
 import com.saber.spring.rabbitmq.producer.test.dto.ResponseDtoStudent;
-import com.saber.spring.rabbitmq.producer.test.dto.StudentDto;
-import com.saber.spring.rabbitmq.producer.test.entities.Student;
+import com.saber.spring.rabbitmq.producer.test.entities.StudentEntity;
 import com.saber.spring.rabbitmq.producer.test.producer.MessageProducer;
 import com.saber.spring.rabbitmq.producer.test.repositories.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -22,30 +22,30 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student addStudent(StudentDto studentDto) {
-        Student student = createStudent(studentDto);
+    public StudentEntity addStudent(com.saber.spring.rabbitmq.producer.test.dto.StudentDto studentDto) {
+        StudentEntity student = createStudent(studentDto);
         log.info("StudentDto saved ====> {}", studentDto);
-        Student studentSaved = this.studentRepository.save(student);
-        log.info("Student send with messaging ===> {}", studentSaved);
-        this.messageProducer.sendMessage(studentSaved);
-        return studentSaved;
+        StudentEntity studentDtoSaved = this.studentRepository.save(student);
+        log.info("Student send with messaging ===> {}", studentDtoSaved);
+        this.messageProducer.sendMessage(studentDtoSaved);
+        return studentDtoSaved;
     }
 
     @Override
     public ResponseDtoStudent findAll() {
-        List<Student> studentList = this.studentRepository.findAll();
+        List<StudentEntity> studentDtoList = this.studentRepository.findAll();
         ResponseDtoStudent responseDtoStudent = new ResponseDtoStudent();
-        responseDtoStudent.setResponse(studentList);
+        responseDtoStudent.setResponse(studentDtoList);
         return responseDtoStudent;
     }
 
     @Override
-    public Student findById(Integer id) {
+    public StudentEntity findById(Integer id) {
         return this.studentRepository.findById(id).orElse(null);
     }
 
-    private Student createStudent(StudentDto studentDto) {
-        Student student = new Student();
+    private StudentEntity createStudent(com.saber.spring.rabbitmq.producer.test.dto.StudentDto studentDto) {
+        StudentEntity student = new StudentEntity();
         student.setFirstName(studentDto.getFirstName());
         student.setLastName(studentDto.getLastName());
         student.setAge(studentDto.getAge());

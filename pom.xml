@@ -12,6 +12,7 @@
     <modules>
         <module>spring-rabbitmq-producer-test</module>
         <module>spring-rabbitmq-consumer-test1</module>
+        <module>model</module>
     </modules>
 
 

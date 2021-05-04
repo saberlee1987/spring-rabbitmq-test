@@ -1,8 +1,7 @@
 package com.saber.spring.rabbitmq.producer.test.controllers;
 
 import com.saber.spring.rabbitmq.producer.test.dto.ResponseDtoStudent;
-import com.saber.spring.rabbitmq.producer.test.dto.StudentDto;
-import com.saber.spring.rabbitmq.producer.test.entities.Student;
+import com.saber.spring.rabbitmq.producer.test.entities.StudentEntity;
 import com.saber.spring.rabbitmq.producer.test.services.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -21,11 +20,11 @@ public class StudentController {
     }
 
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Student> addStudent(@RequestBody StudentDto studentDto) {
+    public ResponseEntity<StudentEntity> addStudent(@RequestBody com.saber.spring.rabbitmq.producer.test.dto.StudentDto studentDto) {
         log.info("Request for add Student with body ===> {}", studentDto);
-        Student studentSaved = this.studentService.addStudent(studentDto);
-        log.info("Response for addStudent ===> {}", studentSaved);
-        return ResponseEntity.ok(studentSaved);
+        StudentEntity studentDtoSaved = this.studentService.addStudent(studentDto);
+        log.info("Response for addStudent ===> {}", studentDtoSaved);
+        return ResponseEntity.ok(studentDtoSaved);
     }
 
     @GetMapping(value = "/findAll")
@@ -37,11 +36,11 @@ public class StudentController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Student> findById(@PathVariable(name = "id") Integer id) {
-        Student student = this.studentService.findById(id);
-        if (student == null) {
+    public ResponseEntity<StudentEntity> findById(@PathVariable(name = "id") Integer id) {
+       StudentEntity studentEntity = this.studentService.findById(id);
+        if (studentEntity == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(student);
+        return ResponseEntity.ok(studentEntity);
     }
 }

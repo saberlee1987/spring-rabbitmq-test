@@ -1,6 +1,7 @@
 package com.saber.spring.rabbitmq.producer.test.dto;
 
-import com.saber.spring.rabbitmq.producer.test.entities.Student;
+import com.saber.entities.StudentDto;
+import com.saber.spring.rabbitmq.producer.test.entities.StudentEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -10,5 +11,5 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class ResponseDtoStudent {
-    private List<Student> response;
+    private List<StudentEntity> response;
 }
